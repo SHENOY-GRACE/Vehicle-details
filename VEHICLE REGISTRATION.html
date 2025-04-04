@@ -1,0 +1,87 @@
+<HTML>
+    <HEAD>
+        <STYLE>
+        *{FONT-SIZE: 25PX;}
+        TABLE{MARGIN-LEFT: 10PX;}
+        </STYLE>
+        <TITLE>VEHICLE DETAILS</TITLE>
+        <script>
+            function checkLastRow() { 
+                // This function runs whenever someone types in any input field
+            
+                const table = document.getElementById("MY TABLE"); 
+                // document.getElementById("vehicleTable") selects the table using its "id"
+                // document is a built-in object in JavaScript that represents the entire webpage
+                // getElementById() is a function that finds an HTML element with a specific ID
+                // Here, "vehicleTable" is the ID of our table, so now 'table' stores that table element
+            
+                const rows = table.getElementsByTagName("tr"); 
+                // getElementsByTagName("tr") finds all rows (<tr>) inside the table
+                // It returns a list (like an array) of all rows
+                // So now, 'rows' holds all the rows in our table
+            
+                const lastRow = rows[rows.length - 1]; 
+                // rows.length gives the total number of rows in the table
+                // rows.length - 1 means the last row (since arrays start from 0)
+                // So now, 'lastRow' stores the last row of our table
+            
+                const allFilled = [...lastRow.getElementsByTagName('input')].some(input => input.value.trim() !== '');
+                // lastRow.getElementsByTagName('input') finds all input fields inside the last row
+                // [...something] converts this into an array (list)
+                // .some(input => input.value.trim() !== '') checks if at least one input field is filled
+                // .trim() removes any spaces before or after the input value
+                // If at least one input field has text, 'allFilled' will be true; otherwise, false
+            
+                if (allFilled) { 
+                    // If the last row has some text, we create a new row
+            
+                    const newRow = table.insertRow(); 
+                    // insertRow() adds a new row at the bottom of the table
+                    // 'newRow' now stores this newly created row
+            
+                    const rowNumber = rows.length; 
+                    // Since a new row is added, rows.length will now be the new row number (2, 3, 4, etc.)
+            
+                    const numberCell = newRow.insertCell(); 
+                    // insertCell() adds a new cell (column) in the new row
+                    // 'numberCell' stores this new cell where we put the SL No.
+            
+                    numberCell.textContent = rowNumber-1 + ".";  
+                    // We set the text inside 'numberCell' to be the row number followed by a dot (e.g., 2., 3., 4.)
+            
+                    for (let i = 1; i < lastRow.cells.length; i++) { 
+                        // Loop through the remaining columns (other than SL No.)
+                        // lastRow.cells.length tells how many columns exist in the last row
+                        // We start from 1 because column 0 is already used for SL No.
+            
+                        const newCell = newRow.insertCell(); 
+                        // Create a new cell (column) in the new row
+            
+                        const input = document.createElement("input"); 
+                        // Create a new input field (text box) inside this cell
+            
+                        input.type = "text"; 
+                        // Set the type of the input field to text (so we can type in it)
+            
+                        input.oninput = checkLastRow;  
+                        // When someone types in this input field, checkLastRow() runs again
+                        // This ensures that new rows are created whenever text is entered
+            
+                        newCell.appendChild(input);  
+                        // Place the newly created input field inside the cell
+                    }
+                }
+            }
+            </script>
+    </HEAD>
+    <BODY>
+        <BR>
+        <BR>
+        <BR> 
+        <BR>   
+     <TABLE BORDER="3" ID="MY TABLE">
+        <TR><TH>SL No</TH><TH>VEHICLE NO</TH><TH>VEHICLE MODEL</TH><TH>TAX</TH><TH>POLLUTION</TH><TH>FITNESS TEST</TH><TH></TH></TR>
+        <TR><TD>1.</TD><TD><INPUT TYPE="TEXT" ONINPUT="checkLastRow()"></TD><TD><INPUT TYPE="TEXT"ONINPUT="checkLastRow()"></TD><TD><INPUT TYPE="TEXT"ONINPUT="checkLastRow()"></TD><TD><INPUT TYPE="TEXT"ONINPUT="checkLastRow()"></TD><TD><INPUT TYPE="TEXT"ONINPUT="checkLastRow()"></TD><TD><INPUT TYPE="TEXT"ONINPUT="checkLastRow()"></TD></TR>
+    </TABLE> 
+    </BODY>
+</HTML>
