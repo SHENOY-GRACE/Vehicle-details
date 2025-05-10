@@ -1,4 +1,4 @@
-app = "your-app-name"  # replace this with your Fly app name
+app = "vehicle-details" 
 
 [build]
   image = "python:3.10"
